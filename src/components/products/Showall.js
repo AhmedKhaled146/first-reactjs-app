@@ -2,32 +2,23 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Stock from "../stock/Stock.js";
 import renderStars from "../stars/Star.js";
+import { addToCart } from "../../store/slices/Card.js";
+import { useDispatch } from "react-redux";
+
+
 
 function Showall(props) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const redirectToDetails = (id) => {
     navigate("/details/" + id);
   };
 
-  const addToCart = () => {
-    const productDetails = {
-      id: props.productdata.id,
-      title: props.productdata.title,
-      brand: props.productdata.brand,
-      thumbnail: props.productdata.thumbnail,
-      price: props.productdata.price,
-      stock: props.productdata.stock,
-    };
-    const quantity = 1;
-
-    navigate("/add-to-card", {
-      state: { productDetails, quantity },
-    });
-  };
 
   return (
     <>
+
       <div
         className="card"
         style={{
@@ -80,7 +71,7 @@ function Showall(props) {
             {" "}
             Details{" "}
           </button>
-          <button className="btn btn-danger m-2" onClick={addToCart}>
+          <button className="btn btn-danger m-2" onClick={() => dispatch(addToCart(props.productdata))}>
             Add To Card
           </button>
         </div>
